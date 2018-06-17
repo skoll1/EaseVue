@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="./observe.js"></script>
+	<script type="text/javascript" src="./watcher.js"></script>
+	<script type="text/javascript" src="./compile.js"></script>
+	<script type="text/javascript" src="./vue.js"></script>
+</head>
+<body>
+	<div id="app">
+        <ul>
+        	<li v-for="item of items">
+        	Name:{{item.name}}
+        	<br />
+        	Price:{{ite..price}}
+        	</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+    	var app=new Vue({
+    		el:"#app",
+    		data:{
+    			items:[
+    				{
+    					name:'shop1',
+    					price:100
+    				},{
+    					name:'shop2',
+    					price:200
+    				},{
+    					name:'shop3',
+    					price:300
+    				}
+    			]
+    		}
+    	})
+    </script>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<h1>全局配置：以后每开一个实例都要设置全局变量</h1>
+	<ul>
+		<li>
+			Vue.config
+			<ul>
+				<li>
+					.slient:是否取消日志和警告
+				</li>
+				<li>
+					11111111111.optionMergeStrategies:自定义合并策略 
+				</li>
+				<li>
+					.devtools:是否允许vue-devtools检查代码。
+				</li>
+				<li>
+					.errorHandler:组件渲染和观察期间未捕获错误的处理函数，可以获得错误信息和Vue实例
+				</li>
+				<li>
+					.warnHandler:Vue运行时警告赋予一个自定义句柄。
+				</li>
+				<li>
+					.keyCodes:给v-on自定义键位别名
+					<ul>
+						<li>
+							<input type="text" @keuup.media-play-pause='method'>
+						</li>
+						<li>
+							v:86,f1:112(正常的使用)
+						</li>
+						<li>
+							'libateer':179(上面绑定字符串)
+						</li>
+						<li>
+							up:[38,87](后面多绑定几个键位)
+						</li>
+					</ul>
+				</li>
+				<li>
+					performacnce:在浏览器开发工具中启用对组件的初始化，编译，渲染和打补丁的性能追踪。
+				</li>
+			</ul>
+		</li>
+	</ul>
+
+	<h1>全局api</h1>
+	<ul>
+		<li>
+			Vue.extend():构建全局组件
+		</li>
+		<li>
+			222222222Vue.nextTick():在下次DOM更新循环之后延迟回调，获取更新之后的DOM.那用Update事件不行么？
+		</li>
+		<li>
+			Vue.set(target,key,value):设置对象的属性，来解决Vue不能检测属性被添加的限制。如果数据创建之前是响应式的，那么确保属性创建后也是响应式的。
+		</li>
+		<li>
+			Vue.delete():避开Vue不能检测到属性被删除的限制。
+		</li>
+		<li>
+			333333333Vue.directive():注册或获取全局指令
+		</li>
+		<li>
+			444444444Vue.filter():注册或获取全局过滤器
+		</li>
+		<li>
+			Vue.component():注册获取全局组件，注册还会自动使用给定的Id设置组件的名称。
+		</li>
+		<li>
+			Vue.use()：安装Vue插件，如果是一个对象，必须提供install方法
+		</li>
+		<li>
+			Vue.mixin()全局注册一个混合，不推荐使用
+		</li>
+		<li>
+			Vue.version():提供字符串形式的安装版本号，可以根据这个来选择不同的插件依赖。
+		</li>
+	</ul>
+</body>
+</html>

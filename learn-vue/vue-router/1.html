@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+<h1>动态路由匹配</h1>
+	<ul>
+		<li>
+			不使用vue-router实现转场动画。
+		</li>
+		<li>
+			<h1>动态路由匹配</h1>
+		</li>
+		<li>
+			注册在$route下面的api
+		</li>
+		<li>
+			我们经常需要把某种模式匹配到所有路由，全部印射到同个组件。也就是路径随ID变换，但是组件都是同一个，这个还可以是多段的，不仅可以加id，还可以在后面加上get/post参数。
+		</li>
+		<li>
+			动态接受参数{{$route.params.id}}
+		</li>
+		<li>
+			响应路由参数的变化watch检测，当使用路由参数的时候，原来的组件实例会被复用，因为两个路由都渲染自系统一个组件，因为根据算法而言，比起销毁在创建，复用参数显得更加高效，这也意味这组件的生命周期钩子函数不会被调用.
+		</li>
+	</ul>
+	<h1>编程式导航</h1>
+	<ul>
+		<li>
+			除了使用<ruter-link>创建的a标签来定义导航链接，还可以借助router的实例方法，通过编写代码来实现
+		</li>
+		<li>
+			this.$route.push({})
+		</li>
+		<li>
+			想要导航到不同的url，使用router.push方法，这个方法会向history栈添加一个新的记录，所以
+		</li>
+		<li>
+			Router.go(1,2,3,-1)
+		</li>
+		<li>
+			router.replace()
+		</li>
+		<li>
+			查询路由组件地址的写法
+		</li>
+	</ul>
+	<h1>命名路由</h1>
+	<ul>
+		<li>
+			配置路由路径文件的时候在路径中添加name字段，通过name来识别一个连接是非常简单的
+		</li>
+	</ul>
+	<h1>命名视图</h1>
+	<ul>
+		<li>
+			同级展示多个视图，而不是嵌套显示，例如创建一个布局，左边和右边。
+		</li>
+	</ul>
+	<h1>路由重定向</h1>
+	<ul>
+		<li>
+			redirect
+		</li>
+	</ul>
+	<h1>路由组件传参</h1>
+	<ul>
+		<li>
+			url里面
+		</li>
+		<li>
+			name参数传递
+		</li>
+	</ul>
+</body>
+</html>

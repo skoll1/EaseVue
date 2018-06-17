@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	 <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+	<h1>自定义(难道这两个都要和表单扯上关系么？)</h1>
+	<ul>
+		<li>
+			自定义指令：v-model,v-show,v-focus
+		</li>
+		<li>自定义事件</li>
+	</ul>
+	<h1>指令</h1>
+	<ul>
+		<li>
+			内联表达式： <div v-text="'hello'+user.name+''+user.age"></div>可以使用计算表达式，而不是简单的属性名。Vue会自动追踪表达式中依赖的属性并触发更新
+		</li>
+		<li>
+			参数:
+		</li>
+		<li>
+			过滤器
+		</li>
+		<li>
+			多重指令从句：在一个物体中绑定多个指令，使用逗号分隔。
+		</li>
+		<li>
+			v-pre:空指令。这些指令不需要判断特性的值。内部的模板不会被编译，用来显示原始的mustache标签，跳过大量的没有指令的节点会加快编译
+		</li>
+		<li>
+			v-ref:
+		</li>
+		<li>
+			v-text:更新元素的textContent,如果需要更新部分的textContent,需要使用{{Mustache}}
+		</li>
+		<li>
+			v-html:更新元素的innerHtml,内容按普通的HTML插入-不会作为Vue模板进行编译。任何在网站上动态渲染v-html的行为都是非常危险的，只在可信的内容上使用v-html，永远不再用户提交的内容上使用
+		</li>
+		<li>
+			v-show:根据表达式的真假，切换元素的dislay属性。
+		</li>
+		<li>
+			v-if
+		</li>
+		<li>
+			v-else-if
+		</li>
+		<li>
+			v-else
+		</li>
+		<li>
+			v-for
+		</li>
+		<li>
+			v-on:<button v-on="{ mousedown: doThis, mouseup: doThat }"></button>
+		</li>
+		<li>
+			v-bind:
+		</li>
+		<li>
+			v-model:随表单控件类型不同而不同
+		</li>
+		<li>
+			v-cloak:这个指令保持在元素上知道关联实例结束编译，和css用的时候保证隐藏未编译的标签知道实例准备完毕。
+		</li>
+		<li>
+			v-once:只渲染元素和组件一次，随后的重新渲染，元素和组件极其所有的子节点将被视为静态内容跳过
+		</li>
+		<li>
+			key:在于Vue的虚拟Dom算法，在新街nodes对比时辨识Vnodes。如果不使用key，会使用一种最大限度的减少动态元素并且尽可能的尝试修复、再利用旧的元素，使用key，他会基于key的变化重新排列元素，移除key不存在的元素。
+		</li>
+	</ul>
+	<div id="app">
+		<input type="text" v-focus="1+1" v-model="message">
+	</div>
+	<script type="text/javascript">
+		// 全局指令
+		Vue.directive('focus',{
+			//被绑定元素插入父节点的时候调用
+			inserted:function(el,binding){
+				// el:指令绑定的元素，可以直接操作dom。
+				el.focus();
+				// console.log(el)
+				console.log('inserted');
+				console.log(binding)
+				// value:后面绑定的值2。=
+				// expression:绑定值的字符串形式
+
+				// arg:传给指令的参数:
+				// modifiters:包含修饰符的对象.
+			},
+			// 指令定义函数提供的几个钩子函数。
+
+
+			// 所在组件Vnode更新时调用：通过比较前后的值来比较。
+			update:function(oldVnode){
+				console.log('update');
+				console.log(oldVnode)
+				// oldvalue:旧的值。只有在这两个里面的binding对象才有这个值
+				// 上一个虚拟节点。只能在这个和下一个里面使用
+			},
+
+			// 所在组件的Vnode以及孩子的Vnode全部更新时调用。
+			componentUpdated:function(vnode){
+				console.log('componentUpdated')
+			},
+			unbind:function(){
+				console.log('unbind');
+			}
+
+		})
+		var app=new Vue({
+			el:"#app",
+			data:{
+				message:'',
+				haha:'haha'
+			}
+		})
+	</script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+	<div id="demo">
+		<h1>模块1</h1>
+		<template v-for="branch in branchs">
+			<input type="radio" v-model="currentBranch" :value="branch">
+			<label :for="branch">{{branch}}</label>
+		</template>
+
+		<h1>模块2</h1>
+		<ul>
+			<li v-for="record in commits">
+				<a :href="record.html_url" target="_blank" class="commit">1111{{record.sha.slice(0,7)}}</a>
+				<span class="message">2222{{record.commit.message|truncate}}</span><hr>
+				<span class="author"><a :href="record.author.html_url" target="_blank">3333{{record.commit.author.name}}</a></span>
+			</li>
+		</ul>
+	</div>
+	<h1>label---data---watch---methods--fetchData</h1>
+	<script type="text/javascript">
+	var apiURL = 'https://api.github.com/repos/vuejs/vue/commits?per_page=3&sha='
+		var app=new Vue({
+			el:"#demo",
+			data:{
+				branchs:['master','dev'],
+				currentBranch:'master',
+				commits:null,
+			},
+			watch:{
+				// watch原来是这么用的
+				currentBranch:'fetchData',
+			},
+			created:function(){
+				this.fetchData();
+			},
+			filters: {
+			    truncate: function (v) {
+			      var newline = v.indexOf('\n')
+			      return newline > 0 ? v.slice(0, newline) : v
+			    },
+			    formatDate: function (v) {
+			      return v.replace(/T|Z/g, ' ')
+			    }
+			  },
+			methods:{
+				fetchData:function(){
+					var xhr=new XMLHttpRequest();
+					var self=this;
+					xhr.open('GET',apiURL+self.currentBranch);
+					xhr.onload=function(){
+						self.commits=JSON.parse(xhr.responseText);
+						console.log(JSON.parse(xhr.responseText));
+					};
+					xhr.send();
+				}
+			}
+		})
+	</script>
+</body>
+</html>

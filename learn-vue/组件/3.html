@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+</head>
+<body>
+    <h1>自定义表单组件</h1>
+    <ul> 
+        <li>给组件绑定原生事件：在某个组件的根元素上监听一个原生事件。加一个.native修饰符</li> 
+        <li>子组件传递数据给父组件的时候，他需要广播的事件，然后父组件就使用这个事件，他就是自定义事件。但是这个父组件他接受数据的方式是模拟子事件的运行方式自己在算一遍，不是很高效，Vuex.</li>  
+        <li>
+            关键是怎么实现除了input的其他表单组件
+        </li>
+        <li>
+            首先先把所有原表单的语法糖事件找出来
+            <ul>
+                <li>
+                    <input :value="msg" @input="e => msg = e.target.value">
+                </li>
+                <li>
+                    <input type="radio" value="msg1" :checked="msg == 'msg1'" @change="e => msg = e.target.value">
+                    <!-- 注意他的value -->
+                </li>
+                <li>
+                    <input type="checkbox" value="check" :checked="!!isChecked" @change="e => isChecked = e.target.checked">
+                </li>
+            </ul>
+        </li>
+        <li>
+            v-model在自定义组件中的使用：意思就是说我还是想用这个语法糖，但是你们得把我顶层的实现原理做修改
+        </li>
+        <li>
+            v-model指令会查找model中所有的值，使用你在prop中指定的属性，替换之前使用的Value属性。同时也将使用event中指定的事件，而不是原来的input事件。
+        </li>
+    </ul>
+    <div id="app">
+        <my-component v-model="msg"></my-component>
+        {{msg}}
+        <my-counter v-model="num"></my-counter>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script>
+        Vue.component('my-component', {
+            template: '<div><input type="text" :value="currentValue" @input="handleInput"/></div>',
+            data: function () {
+                return {
+                    // 双向绑定值
+                    currentValue: this.value
+                }
+            },
+            props: ['value'],// 设置value为props属性
+            methods: {
+                handleInput(event) {
+                    var value = event.target.value;
+                    this.$emit('input', value);
+                }
+            }
+        })
+        Vue.component("my-counter", {
+            template: `<div>
+                <h1>{{value}}</h1>
+                <button @click="plus">+</button>
+                <button @click="minu">-</button>
+            </div>`,
+            props: {
+                value: Number
+            },
+            data: function() {
+                return {
+                    val: this.value
+                }
+            },
+            methods: {
+                plus() {
+                    this.val = this.val + 1
+                    this.$emit('input', this.val)
+                },
+                minu() {
+                    if(this.val>0){
+                        this.val = this.val-1
+                        this.$emit('input', this.val)
+                    }
+                }
+            }
+        });
+
+        // 
+       Vue.component('my-checkbox', {
+              model: {
+                prop: 'checked',
+                event: 'change'
+              },
+              props: {
+                checked: Boolean,
+                // 这样就允许拿 `value` 这个 prop 做其它事了
+                value: String
+              },
+              // ...
+            })
+        new Vue ({
+            el: '#app',
+            data: {
+                msg: 'hello',
+                num: 1
+            }
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+
+</head>
+<body>
+	<h1>数组的显示过滤，排序结果</h1>
+	<ul id="ul1">
+		<li v-for="n in numbers" v-if="n>1" >{{n}}</li>
+		<button>a</button>
+	</ul>
+	<h1>comouted</h1>
+	<ul>
+		<li>
+			他的计算函数还可以加到v-for里面，但是没有任何意义啊，你不可能控制他，只是对数据进行加工。那就是在套一个data就可以用另一个来操作了。
+		</li>
+		<li>
+			比如这个里面给numbers添加赋值
+		</li>
+		<li>
+			甚至v-for还可以添加method函数。
+		</li>
+		<li>
+			v-for添加template模板渲染多个元素
+		</li>
+		<li>
+			对于v-for来说template渲染里面是可以加任何东西的，但是必须得在ul里面
+		</li>
+		<li>
+			v-for和v-if的在同一节点d的时候v-for的优先级比v-if更高。这意味着v-if将重复运行与每个v-fo循环中。当你想为仅有的一些项目想染节点的时候，这种优先机制十分有用
+		</li>
+		<li>
+			v-if,v-for,v-else这三个根本没有所谓的大小之分，每个都可以是父亲，孩子再加上data里面的数据。
+		</li>
+	</ul>
+	<ul id="ul2" 	>
+	<template v-for="n in number">
+		<div class="ok">
+			<img src="1.png" alt="没有">
+		</div>
+		<li>{{n}}</li>
+	</template>
+	</ul>
+	<script type="text/javascript">
+		var app=new Vue({
+			el:"#ul1",
+			data:{
+				numbers:[1,2,3,4,5]
+			},
+			computed:{
+				changes:function(){
+					return this.numbers.filter((number)=>{
+						return number%2===0;
+					})
+				}
+			}
+		})
+
+		var app2=new Vue({
+			el:'#ul2',
+			data:{
+				number:[1,2,3,4,5,6,7,8]
+			}
+		})
+	</script>
+</body>
+</html>

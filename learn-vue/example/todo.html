@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		[v-cloak] { display: none; }
+		/*隐藏未编译的Mustache标签直到实例准备完毕*/
+
+		/*html实例在绑定Vue实例的时候，在页面加载时会闪烁*/
+	</style>
+</head>
+<body>
+	<ul>
+		<li>section作为模块区分代码</li>
+		<li>还用到了localstorage</li>
+	</ul>
+	<h1>watch的使用</h1>
+	<section class="todoapp">
+		<header>
+			<h1>todos</h1>
+			<input type="text" autofocus autocomplete placeholder="你想做什么" v-model="newTodo" @keyup.enter="addTodo">
+		</header>
+
+		<section v-show='todos.length' v-clock>
+			<h2>main</h2>
+			<input type="checkbox" v-model='allDone'>
+			<!-- 全部完成 -->
+
+			<ul>
+				<li v-for='todo in filteredTodos' :key="todo.id" >
+					
+					<div class="view">
+						<input type="checkbox" v-model="todo.completed">
+						<label @dbclick="editTodo(todo)">{{todo.title}}</label>
+						<button @click="removeTodo(todo)">X</button>
+
+					</div>
+					<input type="text" v-model="todo.title" v-todo-focus='todo==editdTodo' @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" @keyup.esc="cancelEdit(todo)">
+				</li>
+			</ul>
+
+
+		</section>
+
+		<footer v-show="todos.length" v-cloak>
+			<h4>下方显示</h4>
+			<span>
+				<strong>{{remaining}}</strong>{{remaining|pluralize}}left
+			</span>
+
+			<ul>
+				<li>
+					<a href="#all">all</a>
+					<a href="#/active">active</a>
+					<a href="#/complated">complate</a>
+				</li>
+			</ul>
+			<button @click="removeComplated" v-show="todos.length">Clear completed</button>
+		</footer>
+	</section>
+	<script type="text/javascript">
+	var version_key='todo-vue-2.0';
+	var todoStorage={
+		fetch:function(){
+			var todos=JSON.parse(localStorage.getItem(version_key)||'[]');
+
+			console.log('todos'+todos);
+
+			todos.forEach((todo,index)=>{
+				todo.id=index;
+			});
+			todoStorage.uid=todos.length;
+			return todos;
+		},
+		save:function(todos){
+			localStorage.setItem(version_key,JSON.stringify(todos));
+		}
+	}
+
+
+
+	var filters={
+		all:function(todos){
+			return todos;
+		},
+		active:function(todos){
+			return filter(function(todo){
+				return !todo.completed
+			})
+		},
+		completed:function(todos){
+			return todos.filter(function(todo){
+				return todo.completed
+			})
+		}
+	}
+
+
+		var app=new Vue({
+			el:".todoapp",
+			data:{
+				newTodo:'',
+				todos:todoStorage.fetch(),
+				// allDone:[],这个为什么不需要有？
+				editdTodo:null,
+				visibility:'all',
+
+			},
+			watch:{
+				todos:{
+					handler:function(todos){
+						todoStorage.save(todos);
+					},
+					deep:true
+					// 当观察的是一个对象的时候，就需要的深度检测。
+				}
+			},
+			computed:{
+				filteredTodos:function(){
+					return filters[this.visibility](this.todos);
+				}
+			},
+			methods:{
+				addTodo:function(){
+
+				}
+			}
+		})
+	</script>
+</body>
+</html>
