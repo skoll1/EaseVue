@@ -7,23 +7,46 @@
 	<script type="text/javascript" src="./watcher.js"></script>
 	<script type="text/javascript" src="./compile.js"></script>
 	<script type="text/javascript" src="./vue.js"></script>
+	<script type="text/javascript" src="./vnode.js"></script>
+	<script type="text/javascript" src="./changeToVnode.js"></script>
 </head>
 <body>
 	<div id="app">
-        <ul>
+        <ul v-if="isShow">
         	<li v-for="item of items">
-        	Name:{{item.name}}
+        	<!-- Name:{{item.name}}
         	<br />
         	Price:{{ite..price}}
-        	</li>
-        </ul>
+        	</li> -->
+		</ul>
+		<div v-show="isLoading">
+			loading
+		</div>
     </div>
     <script type="text/javascript">
-    	var app=new Vue({
-    		el:"#app",
-    		data:{
-    			items:[
-    				{
+    	// var app=new Vue({
+    	// 	el:"#app",
+    	// 	data:{
+    	// 		items:[
+    	// 			{
+    	// 				name:'shop1',
+    	// 				price:100
+    	// 			},{
+    	// 				name:'shop2',
+    	// 				price:200
+    	// 			},{
+    	// 				name:'shop3',
+    	// 				price:300
+    	// 			}
+    	// 		]
+    	// 	}
+		// })
+
+		const data={
+			isShow:false,
+			isLoading:true,
+			items:[
+					{
     					name:'shop1',
     					price:100
     				},{
@@ -33,9 +56,17 @@
     					name:'shop3',
     					price:300
     				}
-    			]
-    		}
-    	})
+			]
+		}
+		
+		let dom=document.querySelector('#app')
+		// console.log(dom)
+		// isRoot(dom)
+
+		index(dom)
+	
+		
+
     </script>
 </body>
 </html>
